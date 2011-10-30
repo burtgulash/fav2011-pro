@@ -6,7 +6,9 @@
 class Graph {
     Edge[] v;
 
-    // Construct Graph where |V| == numVertices
+    /**
+     * Construct Graph where |V| == numVertices
+     */ 
     Graph(int numVertices) {
         v = new Edge[numVertices];
 
@@ -26,11 +28,28 @@ class Graph {
         return builder.toString();
     }
     
+    /**
+      * Returns total cost of graph
+     */
+    // use only for output of Prim, bidirectional edges might be counted twice
+    int totalCost() {
+        int total = 0;
+        for (int i = 0; i < vertices(); i++)
+            for (Edge e = v[i].next; e != null; e = e.next)
+                total += e.weight;
+        return total;
+    }
     
+    /**
+     * Adds edge to graph
+     */
     void addEdge(int src, int dst, int weight) {
         addEdge(new Edge(src, dst, weight));
     }
 
+    /**
+     * Adds edge to graph
+     */
     void addEdge(Edge e) {
         Edge dummy = v[e.source];    
         e.next = dummy.next;
@@ -38,12 +57,16 @@ class Graph {
     }
     
 
-    // return number of vertices
+    /** 
+     * return number of vertices
+     */ 
     int vertices() {
         return v.length;
     }
 
-    // return number of edges
+    /** 
+     * return number of edges
+     */ 
     int edges() {
         int edges = 0;
         for (int i = 0; i < vertices(); i++)

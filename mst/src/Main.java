@@ -82,10 +82,10 @@ public class Main {
             System.exit(1);
 
         writer.print(mst);
-
-        
         writer.flush();
         writer.close();
+
+		System.err.printf("Weight of tree: %d\n", mst.totalCost());
         System.exit(0);
     }
 
