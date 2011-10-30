@@ -16,59 +16,71 @@ import java.io.PrintWriter;
 
 public class Main {
     private static String USAGE = 
-    "usage: java mst [-o OUTFILE] [INFILE]\n\n" + 
+    "usage: java -jar mst.jar [-o OUTFILE] [INFILE]\n\n" + 
     "  graph format:\n    |V| |E|\n    src dst weight\n    ...";
 
 
     public static void main (String [] args) {
         InputStream  inFile   = System.in;
         OutputStream outFile  = System.out;
+        String inFileName = null;
+        String outFileName = null;
 
         if (args.length == 1 && args[0].equals("-h")) {
             System.err.println(USAGE);
             System.exit(0);
         }
 
-        boolean outFileSet = false;
-        boolean inFileSet  = false;
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-o") && args.length > i + 1) {
-                if (outFileSet) {
-                    System.err.println("Output file already set");
+                if (outFileName != null) {
+                    System.err.println("Output file already provided");
                     System.exit(1);
                 }
                     
-                try {
-                    outFile = new FileOutputStream(args[i + 1]);
-                } catch (FileNotFoundException fnf) {
-                    System.err.printf("Can not open %s for writing\n", 
-                                       args[i + 1]);
-                    System.exit(1);
-                } catch (SecurityException se) {
-                    System.err.printf("Don't have permission to write to %s\n",
-                                       args[i + 1]);
-                    System.exit(1);
-                }
-                outFileSet = true;
+                outFileName = args[i + 1];
                 i++;
-            } else if (inFileSet) {
-                System.err.println("Input file already set");
+            } else if (inFileName != null) {
+                System.err.println("Input file already provided");
                 System.exit(1);
             } else {
-                try {
-                    inFile = new FileInputStream(args[i]);
-                } catch (FileNotFoundException fnf) {
-                    System.err.printf("Can not open %s for reading\n", 
-                                       args[i]);
-                    System.exit(1);
-                } catch (SecurityException se) {
-                    System.err.printf("Don't have permission to read from %s\n",
-                                       args[i]);
-                    System.exit(1);
-                }
-                inFileSet = true;
+                inFileName = args[i];
             }
         }
+
+        // open output file
+        if (outFileName != null) {
+            try {
+                outFile = new FileOutputStream(outFileName);
+            } catch (FileNotFoundException fnf) {
+                System.err.printf("Can not open %s for writing\n", 
+                                   outFileName);
+                System.exit(1);
+            } catch (SecurityException se) {
+                System.err.printf("Don't have permission to write to %s\n",
+                                   outFileName);
+                System.exit(1);
+            }
+        }
+
+        // open input file
+        if (inFileName != null) {
+            try {
+                inFile = new FileInputStream(inFileName);
+            } catch (FileNotFoundException fnf) {
+                System.err.printf("Can not open %s for reading\n", 
+                                   inFileName);
+                System.exit(1);
+            } catch (SecurityException se) {
+                System.err.printf("Don't have permission to read from %s\n",
+                                   inFileName);
+                System.exit(1);
+            }
+        }
+
+
+
+        // load graph
         Graph graph = getGraph(new BufferedReader(
                                new InputStreamReader(inFile)));
 
@@ -77,15 +89,17 @@ public class Main {
         if (graph == null)
             System.exit(1);
 
+        // compute MST
         Graph mst   = Prim.findMst(graph);
         if (mst == null)
             System.exit(1);
 
+        // print result
         writer.print(mst);
         writer.flush();
         writer.close();
 
-		System.err.printf("Weight of tree: %d\n", mst.totalCost());
+        System.err.printf("Weight of tree: %d\n", mst.totalCost());
         System.exit(0);
     }
 

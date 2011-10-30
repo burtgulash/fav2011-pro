@@ -1,6 +1,6 @@
-latexfile = knapsack
+latexfile = mst
 figures   = 
-texfiles  = backtrack.py.tex dp.py.tex knapsack.tex pygments.tex recur.py.tex
+texfiles  = 
 helpfiles = $(texfiles) makefile 
 
 
