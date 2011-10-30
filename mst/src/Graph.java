@@ -1,6 +1,12 @@
+/**
+ * Graph data structure
+ *
+ * Stores undirected weighted graph
+ */
 class Graph {
     Edge[] v;
 
+    // Construct Graph where |V| == numVertices
     Graph(int numVertices) {
         v = new Edge[numVertices];
 
@@ -32,10 +38,12 @@ class Graph {
     }
     
 
+    // return number of vertices
     int vertices() {
         return v.length;
     }
 
+    // return number of edges
     int edges() {
         int edges = 0;
         for (int i = 0; i < vertices(); i++)

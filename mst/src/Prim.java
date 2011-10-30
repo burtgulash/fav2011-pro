@@ -1,6 +1,9 @@
 import java.util.PriorityQueue;
 
 
+/**
+ * Prim's minimum spanning tree algorithm
+ */
 public class Prim {
     private static final int startVertex = 0;
     private static PriorityQueue<Edge> pq;
@@ -25,10 +28,11 @@ public class Prim {
         initQueue(graph);
         Graph mst = new Graph(graph.vertices());
 
-        // add v - 1 edges
         Edge current = null;
+        // add v - 1 edges
         for (int i = 0; i < graph.vertices() - 1; i++) {
             try {
+                // while we're getting already seen vertex, keep pulling
                 do
                     current = pq.poll();
                 while (inTree[current.destination]);
@@ -37,9 +41,11 @@ public class Prim {
                 return null;
             }
 
+            // add edge to result tree
             mst.addEdge(current);
             inTree[current.destination] = true;
     
+            // add all previously not seen edges to queue
             Edge neighbor = graph.v[current.destination].next;
             while (neighbor != null) {
                 if (!inTree[neighbor.destination])
