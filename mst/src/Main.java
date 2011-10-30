@@ -8,40 +8,82 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.EOFException;
-
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 
 public class Main {
     private static String USAGE = 
-    "usage: java mst [INFILE]\n\ngraph format:\n|V| |E|\nsrc dst weight\n...";
+    "usage: java mst [-o OUTFILE] [INFILE]\n\n" + 
+    "  graph format:\n    |V| |E|\n    src dst weight\n    ...";
 
 
     public static void main (String [] args) {
-        InputStream inFile = null;
-        if (args.length == 1) {
-            if (args[0].equals("-h")) {
-                System.err.println(USAGE);
-                System.exit(0);
-            }
-            try {
-                inFile = new FileInputStream(args[0]);
-            } catch (FileNotFoundException fnf) {
-                System.err.printf("File %s not found", args[0]);
-                System.exit(1);
-            }
-        } else if (args.length == 0)
-            inFile = System.in;    
-        else {
+        InputStream  inFile   = System.in;
+        OutputStream outFile  = System.out;
+
+        if (args.length == 1 && args[0].equals("-h")) {
             System.err.println(USAGE);
-            System.exit(1);
+            System.exit(0);
         }
 
+        boolean outFileSet = false;
+        boolean inFileSet  = false;
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals("-o") && args.length > i + 1) {
+                if (outFileSet) {
+                    System.err.println("Output file already set");
+                    System.exit(1);
+                }
+                    
+                try {
+                    outFile = new FileOutputStream(args[i + 1]);
+                } catch (FileNotFoundException fnf) {
+                    System.err.printf("Can not open %s for writing\n", 
+                                       args[i + 1]);
+                    System.exit(1);
+                } catch (SecurityException se) {
+                    System.err.printf("Don't have permission to write to %s\n",
+                                       args[i + 1]);
+                    System.exit(1);
+                }
+                outFileSet = true;
+                i++;
+            } else if (inFileSet) {
+                System.err.println("Input file already set");
+                System.exit(1);
+            } else {
+                try {
+                    inFile = new FileInputStream(args[i]);
+                } catch (FileNotFoundException fnf) {
+                    System.err.printf("Can not open %s for reading\n", 
+                                       args[i]);
+                    System.exit(1);
+                } catch (SecurityException se) {
+                    System.err.printf("Don't have permission to read from %s\n",
+                                       args[i]);
+                    System.exit(1);
+                }
+                inFileSet = true;
+            }
+        }
         Graph graph = getGraph(new BufferedReader(
                                new InputStreamReader(inFile)));
+
+        PrintWriter writer = new PrintWriter(outFile);
+
         if (graph == null)
             System.exit(1);
 
         Graph mst   = Prim.findMst(graph);
-        mst.print();
+        if (mst == null)
+            System.exit(1);
+
+        writer.print(mst);
+
+        
+        writer.flush();
+        writer.close();
         System.exit(0);
     }
 
@@ -55,15 +97,18 @@ public class Main {
             System.err.println("Error reading file");
             return null;
         }
-        t     = new StringTokenizer(line);
         int v = 0, e = 0;
 
         try {
+            t     = new StringTokenizer(line);
             v = Integer.parseInt(t.nextToken());
             e = Integer.parseInt(t.nextToken());
 
             if (t.hasMoreTokens())
                 throw new NoSuchElementException();
+        } catch (NullPointerException ex) {
+            System.err.println("Error reading vertex or edge count");
+            return null;
         } catch (NumberFormatException ex) {
             System.err.println("Error reading vertex or edge count");
             return null;
@@ -92,7 +137,7 @@ public class Main {
 
                 e--;
             }
-        } catch (EOFException ex) {
+        } catch (NullPointerException ex) {
             System.err.println("Not enough edges provided");
             return null;
         } catch (IOException ex) {

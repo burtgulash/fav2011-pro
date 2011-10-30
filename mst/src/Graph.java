@@ -8,11 +8,16 @@ class Graph {
             v[i] = new Edge(i, i, -1);
     }
 
-    public void print() {
-        System.out.printf("%d %d\n", vertices(), edges());
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(vertices() + " " + edges() + "\n");
+
         for (int i = 0; i < vertices(); i++)
             for (Edge e = v[i].next; e != null; e = e.next)
-                System.out.println(e);
+                builder.append(e.toString() + "\n");
+
+        return builder.toString();
     }
     
     
