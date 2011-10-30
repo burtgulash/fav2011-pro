@@ -119,6 +119,11 @@ public class Main {
             t     = new StringTokenizer(line);
             v = Integer.parseInt(t.nextToken());
             e = Integer.parseInt(t.nextToken());
+			if (v <= 0 || e <= 0) {
+				System.err.println("Non-positive vertex or edge count");
+				return null;
+			}
+				
 
             if (t.hasMoreTokens())
                 throw new NoSuchElementException();
@@ -153,6 +158,9 @@ public class Main {
 
                 e--;
             }
+		} catch (NoSuchElementException ex) {
+            System.err.println("Graph format error");
+            return null;
         } catch (NullPointerException ex) {
             System.err.println("Not enough edges provided");
             return null;
