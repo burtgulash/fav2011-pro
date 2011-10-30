@@ -1,0 +1,157 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath}
+
+\usepackage[pdfborder=0 0 0]{hyperref}
+	
+
+\include{pygments}
+
+
+
+\title{Programovací strategie: Medián}
+\author{Tomáš Maršálek}
+\date{6.\,října 2011}
+
+%% -----------------------
+%% preamble end
+
+
+
+\begin{document}
+\maketitle
+
+\section{Zadání}
+Najděte v dostupné literatuře nebo vymyslete co nejlepší algoritmus pro výpočet mediánu. Nezapomeňte na citaci zdrojů. Kritéria kvality v sestupném pořadí jsou: výpočetní složitost, jednoduchost a implementační nenáročnost, paměťová spotřeba.
+
+\section{Problém}
+Máme posloupnost $N$ porovnatelných prvků, ve které hledáme K-tý nejmenší prvek.
+Speciálním případem je medián, pro který $K = N/2$. Triviálním řešením je 
+seřazení posloupnosti a odpočítání K-tého prvku. Pro obecný případ tedy 
+máme horní hranici $O(N \log N)$. Pokud pro danou datovou množinu existuje lepší
+řadící algoritmus (např. radix sort), jsme schopni najít medián v lineárním
+čase.
+
+\section{Obecné řešení}
+Algoritmus quickselect (Hoare, 1962) je velmi podobný quicksortu. S ním sdílí
+stejnou rozdělující proceduru a složitost nejhoršího případu $O(N^2)$, 
+očekávaná složitost u běžného případu je ale $O(N)$ oproti $O(N \log N)$ 
+u quicksortu.
+
+\section{Implementace}
+\subsection{Rozdělení}
+Rozdělovací funkce určí prvek zvaný pivot a uspořádá prvky posloupnosti tak,
+že všechny prvky menší než pivot budou vlevo a všechny větší vpravo od pivotu. 
+Pole pak vypadá následovně:
+\vspace{1cm}
+
+\input{rozdelit.fig}
+\clearpage
+\input{rozdelit.py}
+
+\subsection{Quickselect}
+Algoritmus nejprve vybere náhodný prvek jako pivot a podle něj rozdělí pole.
+O pivotu teď můžeme s jistotou tvrdit, že kdyby bylo pole seřázené, byl by na 
+stejné pozici.  Pokud se zadařilo a pozice pivotu se shoduje s pozicí 
+hledaného prvku K, máme hotovo, pivot je hledaným prvkem. Pokud ne, pak 
+rekurzivně opakujeme quickselect na tu část pole, ve které prvek definitivně 
+bude. V případě pole o jednom prvku $(levy = pravy)$ vrátíme tento prvek.
+\input{quickselect_recur.py}
+
+\subsection{Optimalizace}
+Po odstranění koncové rekurze se kód podobá binárnímu vyhledávání.
+\input{quickselect.py}
+
+
+\section{Časová náročnost}
+Složitost algoritmu je závislá na výběru pivotu. Nejjednodušším řešením je
+výběr fixního prvku, například prvku nejvíce vlevo. Pak ale při seřazeném poli 
+složitost degeneruje na případ $O(N^2)$. Randomizovaný výběr alespoň ochrání 
+před případem seřazeného pole, ale stále může s malou pravděpodobností nastat 
+degenerující případ.
+
+\subsection{Ideální případ}
+Budeme-li předpokládat, že vybraný pivot je v každé iteraci mediánem posloupnosti, pak časová složitost bude
+\begin{align*}
+T(N) &= T(N/2) + N \\
+&= T(N/4) + N + N/2 \\
+&= T(N/8) + N + N/2 + N/4 \\
+&= T(N/2^i) + (N + N/2 + N/4 + \ldots + N/2^i) \\
+&< O(1) + 2N \\
+&= O(N)
+\end{align*}
+
+Obdobně bude-li výběr pivotu v každé iteraci rozdělovat posloupnost na dvě části
+podle nějakého zlomku, který nezávisí na N (např. $1/2~|~1/2$ nebo 
+$75/100~|~25/100$ nebo $pN~|~(1~-~p)N$ pro $0~<~p~<~1$, 
+ale ne $(N~-~1)/N~|~1/N$), bude složitost pro dostatečně velkou konstantu 
+stále lineární
+\begin{align*}
+T(N) &= T(pN) + N \\
+&= T(p^2 N) + N + p N \\
+&= T(p^i N) + (N + p N + \ldots + p^i N) \\
+&= O(1) + N \frac{1 - p^{1 - \log _p N}}{1 - p} \\
+&< O(1) + N \frac{1}{1 - p} \\
+&= O(N)
+\end{align*}
+
+\subsection{Nejhorší případ}
+Nastane, pokud každé rozdělení rozdělí posloupnost na jeden prvek a $N~-~1$
+prvků
+\begin{align*}
+T(N) &= T(N - 1) + N \\
+&= T(N - 2) + (N) + (N - 1) \\
+&= T(N - 3) + (N) + (N - 2) + (N - 3) \\
+&= O(1) + \displaystyle\sum\limits_{i = 0}^{N} (N - i) \\
+&= O(N^2)
+\end{align*}
+Ten ale v praxi potkáme s velmi malou pravděpodobností.
+
+\section{Vylepšení}
+Výběr pivotu je klíčovým prvkem, který určuje složitost celého algoritmu. Existuje
+však metoda pro výběr pivotu takového, že zaručí složitost 
+nejhoršího případu $O(N)$, známá jako {\sc Median of Medians} nebo 
+{\sc BFPRT (Blum, Floyd, Pratt, Rivest, Tarjan, 1973)} \cite{ocwmit}.
+
+\section{Dodatek k implementaci}
+Program {\tt median.py} je v jazyce python 2.7.2. Povolená vstupní data jsou 
+pouze celá čísla.  Program slouží pouze jako demonstrace, proto neplánuji 
+rozšíření pro jiné datové typy.
+
+\subsection{Příklad použití pro bash}
+\begin{verbatim}
+# vygenerovani zkusebnich dat
+> test.data; for i in $(seq 1 10000); do echo $RANDOM >> test.data; done
+
+# vypocet medianu vzorovych dat
+cat test.data | ./median.py
+
+# overeni vysledku (serazeni a vypsani n/2 teho radku)
+cat test.data | sort -n | head -n $(($(wc -l < test.data)/2)) | tail -1
+
+\end{verbatim}
+
+\begin{thebibliography}{3}
+\bibitem[1]{CLRS}
+{\em Cormen, Thomas H.; Leiserson, Charles E.; 
+	Rivest, Ronald L.; Stein, Clifford} \\
+{\bf Introduction to Algorithms (2nd ed.)} \\
+	MIT Press and McGraw-Hill, 2001
+
+\bibitem[2]{ocwmit}
+{\em Prof. Erik Demaine, Prof. Charles Leiserson} \\
+{\bf Introduction to Algorithms (SMA 5503), 
+	Lecture 6: Order Statistics, Median} (video) 2005 \\
+\url{http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/lecture-6-order-statistics-median/}
+
+\bibitem[3]{cs61b}
+{\em Jonathan Shewchuk} \\
+{\bf CS 61B Lecture 32: Sorting III} (video) 2006 \\
+\url{http://www.youtube.com/watch?v=Y6LOLpxg6Dc}
+
+
+\end{thebibliography}
+
+\end{document}

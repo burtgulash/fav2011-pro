@@ -1,0 +1,117 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath}
+
+
+\include{pygments}
+
+
+\title{Programovací strategie:  Maximalizujte svůj zisk}
+\author{Tomáš Maršálek}
+\date{6.\,října 2011}
+
+%% -----------------------------------------
+
+
+\begin{document}
+\maketitle
+
+\section{Zadání}
+Se soutěžemi se v televizi roztrhl pytel. Je na čase, abyste si vydělali také 
+vy. Otázky jsou pro vás naprosto triviální a přichází čas vybrat si odměnu. 
+Přivedou před vás n asistentek. Asistentky se drží za ruce a každá má na krku 
+pověšenou ceduli s celočíselnou sumou, kterou získáte (kladné číslo) nebo 
+naopak ztratíte (záporné číslo), když si tuto asistentku vyberete. Můžete si 
+vybrat jakýkoliv počet asistentek, ale jejich spojené ruce smíte přerušit max. 
+na dvou místech, tedy posloupnost odměn, kterou si vyberete, musí být spojitá, 
+ale může být libovolně dlouhá. Asistentky nezískáváte, pouze sumy výher, 
+takže jiná než finanční kritéria není třeba brát v úvahu.
+
+\section{Naivní řešení}
+Jednoduše vyzkoušíme všechny souvislé podposloupnosti a vybereme tu s nejvyšší
+sumou. Tedy pro všechny možné délky podposloupnosti a pro všechny jejich možné 
+posuny zkoušíme, jestli je jejich suma lepší než dosavadní.
+\input{naivniZisk.py}
+
+\subsection{Složitost}
+Máme dvojitě vnořený cyklus, očekáváme kvadratickou složitost.
+\begin{align*}
+T(N) &= (\Theta(1) + (N - 1)) + (\Theta(1) + (N - 2)) + \ldots + (\Theta(1) + (N - N)) \\
+&= \Theta(N) + N^2 - \frac{N}{2}(N + 1) \\
+&= \Theta (N^2)
+\end{align*}
+
+\vspace{1cm}
+
+\section{Dynamické programování}
+Definujme funkci zisk, kterou chceme maximalizovat pro posloupnost délky N
+$$zisk(N) = nejvy\check{s}\check{s}\acute{\i}\ suma\ v\ cel\acute{e}\  
+posloupnosti \\ $$
+
+\setlength{\unitlength}{.6mm}
+\input{zisk.fig1} \\
+
+\vspace{1cm}
+
+Abychom našli algoritmus založený na dynamickém programování, hledáme rekurzivní
+vyjádření této funkce. Dodefinujeme ještě pomocné funkce
+
+\begin{align*}
+krajni\_zisk(N) &= nejvy\check{s}\check{s}\acute{\i}\ zisk\ z\ 
+posloupnosti\ u\ prav\acute{e}ho\ kraje \\
+h(N) &= hodnota\ N-t\acute{e}ho\ prvku
+\end{align*}
+\input{zisk.fig2}
+
+\mbox{}
+\vspace{1cm}
+
+\clearpage
+Vyjádříme-li $zisk(N + 1)$ pomocí $zisk(N)$, mohou nastat tři případy.
+\begin{enumerate}
+\item krajní zisk nám vůbec nepomohl a $zisk(N + 1) = zisk(N)$ \\
+\input{zisk.fig3} \\
+
+\item krajní zisk s novou hodnotou je větší než $zisk(N)$, tedy \\
+	$zisk(N + 1) = krajni\_zisk(N) + h(N + 1)$ \\
+\input{zisk.fig4} \\
+
+\item $krajni\_zisk(N)$ je záporný, tedy je výhodnější vzít pouze 
+	poslední hodnotu. \\
+	$zisk(N + 1) = h(N + 1)$ \\
+\input{zisk.fig5} \\
+
+\end{enumerate} 
+
+\vspace{1cm}
+
+Rekurzivním vyjádřením pak dostáváme základ pro algoritmus. Rekurzi pouze 
+obrátíme na dynamické programování.
+\begin{align*}
+zisk(N + 1) = \max (&zisk(N), \\
+&krajni\_zisk(N) + h(N + 1), \\
+&h(N + 1)) \\
+\end{align*}
+
+Stejně jako u předešlého algoritmu si zaznamenáváme hodnotu zisku, a polohu
+podposloupnosti (počáteční index a délku). Náročnost je očividně $\Theta(N)$.
+\input{dpZisk.py}
+
+\section{Implementace}
+Program {\tt zisk.py} je v jazyce python 2.7.2. Vstupní data jsou kladná 
+a záporná celá čísla. Výstupem je hodnota zisku, index první asistentky 
+(od nuly), která začíná vybranou posloupnost a délka této posloupnosti. Jsou 
+implementována řešení oběma metodami.
+
+\subsection{Příklad použití}
+\begin{verbatim}
+# vygenerovani vstupnich dat:  300 cisel od -500 do 499
+> test.data
+for i in $(seq 1 300); do echo $(($RANDOM % 1000 - 500)) >> test.data; done
+
+cat test.data | ./zisk.py
+\end{verbatim}
+
+\end{document}

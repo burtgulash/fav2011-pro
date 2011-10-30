@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{dpZisk}\PY{p}{(}\PY{n}{h}\PY{p}{)}\PY{p}{:}
+	\PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{h}\PY{p}{)}
+	\PY{n}{max\PYZus{}zisk}\PY{p}{,} \PY{n}{max\PYZus{}i}\PY{p}{,} \PY{n}{max\PYZus{}delka} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}
+	\PY{n}{krajni\PYZus{}zisk}\PY{p}{,} \PY{n}{krajni\PYZus{}i}\PY{p}{,} \PY{n}{krajni\PYZus{}delka} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}
+	\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+		\PY{k}{if} \PY{n}{krajni\PYZus{}zisk} \PY{o}{>} \PY{l+m+mi}{0}\PY{p}{:}        \PY{c}{\PYZsh{} Případ 2}
+			\PY{n}{krajni\PYZus{}zisk} \PY{o}{+}\PY{o}{=} \PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+			\PY{n}{krajni\PYZus{}delka} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+		\PY{k}{else}\PY{p}{:}                      \PY{c}{\PYZsh{} Případ 3}
+			\PY{n}{krajni\PYZus{}zisk} \PY{p}{,}\PY{n}{krajni\PYZus{}i}\PY{p}{,} \PY{n}{krajni\PYZus{}delka} \PY{o}{=} \PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{l+m+mi}{1}
+
+		\PY{k}{if} \PY{n}{krajni\PYZus{}zisk} \PY{o}{>} \PY{n}{max\PYZus{}zisk}\PY{p}{:} \PY{c}{\PYZsh{} Případ 1 (obráceně)}
+			\PY{n}{max\PYZus{}zisk}\PY{p}{,} \PY{n}{max\PYZus{}i}\PY{p}{,} \PY{n}{max\PYZus{}delka} \PY{o}{=} \PY{n}{krajni\PYZus{}zisk}\PY{p}{,} \PY{n}{krajni\PYZus{}i}\PY{p}{,} \PY{n}{krajni\PYZus{}delka}
+	\PY{k}{return} \PY{n}{max\PYZus{}zisk}\PY{p}{,} \PY{n}{max\PYZus{}i}\PY{p}{,} \PY{n}{max\PYZus{}delka}
+\end{Verbatim}

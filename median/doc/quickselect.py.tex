@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{quickselect}\PY{p}{(}\PY{n}{ar}\PY{p}{,} \PY{n}{levy}\PY{p}{,} \PY{n}{pravy}\PY{p}{,} \PY{n}{K}\PY{p}{)}\PY{p}{:}
+	\PY{k}{while} \PY{n}{levy} \PY{o}{!=} \PY{n}{pravy}\PY{p}{:}
+		\PY{n}{nahodnyIndex} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n}{levy}\PY{p}{,} \PY{n}{pravy}\PY{p}{)}
+		\PY{n}{pivotIndex} \PY{o}{=} \PY{n}{rozdelit}\PY{p}{(}\PY{n}{ar}\PY{p}{,} \PY{n}{levy}\PY{p}{,} \PY{n}{pravy}\PY{p}{,} \PY{n}{nahodnyIndex}\PY{p}{)}
+		\PY{k}{if} \PY{n}{pivotIndex} \PY{o}{==} \PY{n}{K}\PY{p}{:}
+			\PY{k}{return} \PY{n}{ar}\PY{p}{[}\PY{n}{pivotIndex}\PY{p}{]}
+		\PY{k}{if} \PY{n}{pivotIndex} \PY{o}{<} \PY{n}{K}\PY{p}{:}
+			\PY{n}{levy} \PY{o}{=} \PY{n}{pivotIndex} \PY{o}{+} \PY{l+m+mi}{1}
+		\PY{k}{else}\PY{p}{:}
+			\PY{n}{pravy} \PY{o}{=} \PY{n}{pivotIndex} \PY{o}{-} \PY{l+m+mi}{1}
+	\PY{k}{return} \PY{n}{ar}\PY{p}{[}\PY{n}{levy}\PY{p}{]}
+\end{Verbatim}

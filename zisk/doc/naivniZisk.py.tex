@@ -1,0 +1,18 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{naivniZisk}\PY{p}{(}\PY{n}{h}\PY{p}{)}\PY{p}{:}
+	\PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{h}\PY{p}{)}
+	\PY{n}{max\PYZus{}zisk}\PY{p}{,} \PY{n}{max\PYZus{}i}\PY{p}{,} \PY{n}{max\PYZus{}delka} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}
+	\PY{n}{pocatecni\PYZus{}zisk} \PY{o}{=} \PY{l+m+mi}{0}
+	\PY{k}{for} \PY{n}{delka} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{n} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+		\PY{n}{pocatecni\PYZus{}zisk} \PY{o}{+}\PY{o}{=} \PY{n}{h}\PY{p}{[}\PY{n}{delka} \PY{o}{-} \PY{l+m+mi}{1}\PY{p}{]}
+		\PY{n}{zisk} \PY{o}{=} \PY{n}{pocatecni\PYZus{}zisk}
+
+		\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n} \PY{o}{-} \PY{n}{delka}\PY{p}{)}\PY{p}{:}
+			\PY{k}{if} \PY{n}{zisk} \PY{o}{>} \PY{n}{max\PYZus{}zisk}\PY{p}{:}
+				\PY{n}{max\PYZus{}zisk}\PY{p}{,} \PY{n}{max\PYZus{}i}\PY{p}{,} \PY{n}{max\PYZus{}delka} \PY{o}{=} \PY{n}{zisk}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{n}{delka}
+			\PY{n}{zisk} \PY{o}{+}\PY{o}{=} \PY{n}{h}\PY{p}{[}\PY{n}{delka} \PY{o}{+} \PY{n}{i}\PY{p}{]} \PY{o}{-} \PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+
+		\PY{k}{if} \PY{n}{zisk} \PY{o}{>} \PY{n}{max\PYZus{}zisk}\PY{p}{:}
+			\PY{n}{max\PYZus{}zisk}\PY{p}{,} \PY{n}{max\PYZus{}i}\PY{p}{,} \PY{n}{max\PYZus{}delka} \PY{o}{=} \PY{n}{zisk}\PY{p}{,} \PY{n}{n} \PY{o}{-} \PY{n}{delka}\PY{p}{,} \PY{n}{delka}
+	\PY{k}{return} \PY{n}{max\PYZus{}zisk}\PY{p}{,} \PY{n}{max\PYZus{}i}\PY{p}{,} \PY{n}{max\PYZus{}delka}
+\end{Verbatim}

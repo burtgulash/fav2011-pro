@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{rozdelit}\PY{p}{(}\PY{n}{ar}\PY{p}{,} \PY{n}{levy}\PY{p}{,} \PY{n}{pravy}\PY{p}{,} \PY{n}{p}\PY{p}{)}\PY{p}{:}
+	\PY{n}{pivot} \PY{o}{=} \PY{n}{ar}\PY{p}{[}\PY{n}{p}\PY{p}{]}
+	\PY{n}{i}\PY{p}{,} \PY{n}{j} \PY{o}{=} \PY{n}{levy}\PY{p}{,} \PY{n}{levy}
+	\PY{n}{ar}\PY{p}{[}\PY{n}{pravy}\PY{p}{]}\PY{p}{,} \PY{n}{ar}\PY{p}{[}\PY{n}{p}\PY{p}{]} \PY{o}{=} \PY{n}{ar}\PY{p}{[}\PY{n}{p}\PY{p}{]}\PY{p}{,} \PY{n}{ar}\PY{p}{[}\PY{n}{pravy}\PY{p}{]}
+	\PY{k}{while} \PY{n}{i} \PY{o}{<}\PY{o}{=} \PY{n}{pravy}\PY{p}{:}
+		\PY{k}{if} \PY{n}{ar}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{<} \PY{n}{pivot}\PY{p}{:}
+			\PY{n}{ar}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{ar}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{ar}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,} \PY{n}{ar}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+			\PY{n}{j} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+		\PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+	\PY{n}{ar}\PY{p}{[}\PY{n}{pravy}\PY{p}{]}\PY{p}{,} \PY{n}{ar}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{ar}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,} \PY{n}{ar}\PY{p}{[}\PY{n}{pravy}\PY{p}{]}
+	\PY{k}{return} \PY{n}{j}
+\end{Verbatim}

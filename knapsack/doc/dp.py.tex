@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{knapsack}\PY{p}{(}\PY{n}{N}\PY{p}{,} \PY{n}{C}\PY{p}{)}\PY{p}{:}
+	\PY{n}{tmp} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0} \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{C} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{N}\PY{p}{)}\PY{p}{]}  \PY{c}{\PYZsh{} DP tabulka}
+	\PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{C} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:} \PY{c}{\PYZsh{} base case }
+		\PY{k}{if} \PY{n}{hmotnost}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{<}\PY{o}{=} \PY{n}{j}\PY{p}{:}
+			\PY{n}{tmp}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{hodnota}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+
+	\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{N}\PY{p}{)}\PY{p}{:}
+		\PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{C} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+			\PY{k}{if} \PY{n}{hmotnost}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{>} \PY{n}{j}\PY{p}{:}
+				\PY{n}{tmp}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{tmp}\PY{p}{[}\PY{n}{i} \PY{o}{-} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+			\PY{k}{else}\PY{p}{:}
+				\PY{n}{tmp}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{n}{tmp}\PY{p}{[}\PY{n}{i} \PY{o}{-} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{j} \PY{o}{-} \PY{n}{hmotnost}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]} \PY{o}{+} \PY{n}{hodnota}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}
+								\PY{n}{tmp}\PY{p}{[}\PY{n}{i} \PY{o}{-} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+	\PY{k}{return} \PY{n}{tmp}\PY{p}{[}\PY{o}{-}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{o}{-}\PY{l+m+mi}{1}\PY{p}{]}        \PY{c}{\PYZsh{} vrátit poslední prvek tabulky}
+\end{Verbatim}

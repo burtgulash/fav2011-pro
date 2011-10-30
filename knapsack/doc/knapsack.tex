@@ -1,0 +1,118 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath}
+
+\usepackage[pdfborder=0 0 0]{hyperref}
+
+\include{pygments}
+
+\title{Programovací strategie: Jak pobrat odměnu}
+\author{Tomáš Maršálek}
+\date{6.\,října 2011}
+
+\begin{document}
+\maketitle
+
+\section{Zadání}
+Svojí nebojácností a schopnostmi jste zvítězili nad zlým čarodějem a teď si 
+můžete buď odvést princeznu anebo si vybrat některý z krásných zlatých předmětů,
+které kouzelník vlastní. Princezna se vám nelíbí, proto jste se rozhodl pro 
+zlato. Můžete si vybrat spoustu velkých a krásných předmětů, jedinou podmínkou
+je, že vybrané objekty musíte být schopen odnést v batohu, jehož nosnost 
+(i vaše, koneckonců) je omezena. Pokud se vám to nepovede, nezískáte nic. 
+Předměty jsou různorodé – svícny, sošky apod., každý stojí jinak a váží jinak. 
+Teď se vám hodí praxe v dynamickém programování z PRO.
+
+Vstupem je množina položek $P=\{p_1,p_2,\ldots,p_n\}$, kde položka $p_i$ má 
+velikost $s_i$ a hodnotu $v_i$, batohová kapacita (tj. velikost batohu) je $C$. 
+Vašim úkolem je najít podmnožinu s maximální hodnotou zjištěnou jako součet 
+hodnot prvků podmnožiny takovou, aby součet velikostí prvků podmnožiny 
+nepřekročil $C$ (tj. všechny vybrané položky se musí vejít do batohu). 
+Velikosti položek i jejich hodnoty jsou kladná čísla do 1000.
+
+\section{Problém}
+Problém je známý jako {\sc knapsack problem}, zde přesněji 
+{\sc discrete knapsack}, jelikož počet předmětů, které můžeme pobrat není 
+spojitá hodnota. V opačném případě by se jednalo o {\sc liquid knapsack}, 
+pro který se dá použít jednoduchý greedy algoritmus. Ještě speciálnější 
+vymezení je {\sc 0-1~knapsack}, protože počet předmětů, 
+které můžeme vzít od každého druhu je právě 0 nebo 1.
+
+\section{Řešení}
+Algoritmus bude na principu dynamického programování. Snažíme se maximalizovat
+hodnotu batohu, tak abychom se vešli do limitu $C$.
+\begin{align*}
+knapsack(N, C) =\ &maxim\acute{a}ln\acute{\i}\ hodnota,\ kterou\ je\ 
+mo\check{z}no\ narvat\ do\ batohu\ tak, \\
+ &\check{z}e\ nep\check{r}ekro\check{c}\acute{\i}me\ mez\ C 
+\end{align*}
+
+\subsection{Myšlenka}
+Optimální substruktura bude založená na jednoduché myšlence, že N-tý
+předmět můžeme do batohu vložit nebo naopak ne. Ta z možností, která bude mít 
+větší hodnotu nás bude zajímat. Batoh, který překročil hmotnostní limit bude 
+mít hodnotu $0$.
+
+Rekurzivní vyjádření bude vypadat zhruba následovně
+\begin{align*}
+krapsack(N, C) = \max(&N-tou\ polo\check{z}ku\ p\check{r}ijmout, \\
+&N-tou\ polo\check{z}ku\ vyhodit)
+\end{align*}
+
+Formálně zapsáno 
+\begin{align*}
+knapsack(N, C) = \max(&knapsack(N - 1, C - hmotnost(N)) + hodnota(N), \\
+&knapsack(N - 1, C))
+\end{align*}
+
+\input{recur.py}
+
+\vspace{.5cm}
+\subsection{DP provedení}
+Uvedenou rekurzi vypočítáme zdola nahoru tabulární metodou (klasické dynamické
+programování). 
+
+Funkce závisí na dvou parametrech $N$ a $C$, proto složitost
+bude $\Theta (NC)$. Na první pohled by se mohlo zdát, že se jedná o polynomiální
+složitost, ale je třeba si uvědomit, že limit~$C$ může dosahovat exponenciálních
+hodnot. {\sc Knapsack problem} je na seznamu Karpových 21 NP-úplných problémů.
+\cite{wiki}
+\input{dp.py}
+
+\clearpage
+Položky najdeme zpětným průchodem tabulkou
+\input{backtrack.py}
+
+\section{Implementace}
+Použitý jazyk je python 2.7.2. Implementace obsahuje generátor vstupu 
+{\tt gen.py} a vlastní program {\tt knapsack.py}.
+
+\subsection{Příklad použití}
+\begin{verbatim}
+# vygenerovat 100 polozek s maximalni hodnotou a maximalni vahou 1000
+./gen.py 100 1000 1000 > test.data
+
+# pouzit vygenerovana data pro knapsack s limitem 5000 (C = 5000)
+cat test.data | ./knapsack.py 5000
+\end{verbatim}
+
+\vspace{1cm}
+\begin{thebibliography}{0}
+
+\bibitem[1]{aduni}
+{\em Shai Simonson} \\
+{\bf 02-20-01: Knapsack, Bandwidth Min. Intro: Greedy Algs.} (video) 2001 \\
+\url{http://aduni.org/courses/algorithms/index.php?view=cw} \\
+\url{http://video.google.com/videoplay?docid=-8586312179390822765}
+
+\bibitem[2]{wiki}
+{\em Wikipedia contributors} \\
+{\bf "Knapsack problem,"\ Wikipedia, The Free Encyclopedia} \\
+\url{http://en.wikipedia.org/w/index.php?title=Knapsack_problem&oldid=452859011} \\ 
+(accessed October 5, 2011).
+
+\end{thebibliography}
+
+\end{document}

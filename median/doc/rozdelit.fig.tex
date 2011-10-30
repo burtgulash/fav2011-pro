@@ -1,0 +1,22 @@
+%% Partition figure %%
+\setlength{\unitlength}{.8mm}
+\begin{center}
+\begin{picture}(0, 0)
+
+\put(0,0){\line(1, 0){50}}
+\put(0,0){\line(-1, 0){50}}
+
+\put(0,10){\line(1, 0){50}}
+\put(0,10){\line(-1, 0){50}}
+
+\put(-50, 0){\line(0, 1){10}}
+\put(50, 0){\line(0, 1){10}}
+
+\put(-10, 0){\line(0, 1){10}}
+\put(10, 0){\line(0, 1){10}}
+
+\put(-5, 4){$pivot$}
+\put(-45, 4){$\{ar[x] < pivot \}$}
+\put(15, 4){$\{ar[x] \geq pivot \}$}
+\end{picture}
+\end{center}

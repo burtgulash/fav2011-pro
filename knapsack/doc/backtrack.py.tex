@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PY{n}{polozky} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+	\PY{k}{while} \PY{n}{i} \PY{o}{>}\PY{o}{=} \PY{l+m+mi}{0} \PY{o+ow}{and} \PY{n}{j} \PY{o}{>}\PY{o}{=} \PY{l+m+mi}{0}\PY{p}{:}
+		\PY{k}{if} \PY{n}{j} \PY{o}{>}\PY{o}{=} \PY{n}{hmotnost}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PYZbs{}
+		\PY{o+ow}{and} \PY{n}{tmp}\PY{p}{[}\PY{n}{i} \PY{o}{-} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{j} \PY{o}{-} \PY{n}{hmotnost}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]} \PY{o}{+} \PY{n}{hodnota}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{n}{tmp}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{:}
+			\PY{n}{polozky}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+			\PY{n}{j} \PY{o}{-}\PY{o}{=} \PY{n}{hmotnost}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+			\PY{n}{i} \PY{o}{-}\PY{o}{=} \PY{l+m+mi}{1}
+		\PY{k}{elif} \PY{n}{tmp}\PY{p}{[}\PY{n}{i} \PY{o}{-} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{==} \PY{n}{tmp}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{:}
+			\PY{n}{i} \PY{o}{-}\PY{o}{=} \PY{l+m+mi}{1}
+		\PY{k}{else}\PY{p}{:}
+			\PY{n}{j} \PY{o}{-}\PY{o}{=} \PY{l+m+mi}{1}
+	\PY{n}{polozky} \PY{o}{=} \PY{n}{polozky}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{o}{-}\PY{l+m+mi}{1}\PY{p}{]} \PY{c}{\PYZsh{} obrátit položky}
+\end{Verbatim}

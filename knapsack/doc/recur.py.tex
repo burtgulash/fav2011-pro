@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{knapsack}\PY{p}{(}\PY{n}{N}\PY{p}{,} \PY{n}{C}\PY{p}{)}\PY{p}{:}
+	\PY{k}{if} \PY{n}{N} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+		\PY{k}{return} \PY{l+m+mi}{0}
+	\PY{n}{i} \PY{o}{=} \PY{n}{N} \PY{o}{-} \PY{l+m+mi}{1}                           \PY{c}{\PYZsh{} začínáme od nuly}
+	\PY{k}{if} \PY{n}{hmotnost}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{>} \PY{n}{C}\PY{p}{:}
+		\PY{k}{return} \PY{n}{knapsack}\PY{p}{(}\PY{n}{N} \PY{o}{-} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{C}\PY{p}{)}
+	\PY{k}{return} \PY{n+nb}{max}\PY{p}{(}\PY{n}{knapsack}\PY{p}{(}\PY{n}{N} \PY{o}{-} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{C} \PY{o}{-} \PY{n}{hmotnost}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n}{hodnota}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}
+	           \PY{n}{knapsack}\PY{p}{(}\PY{n}{N} \PY{o}{-} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{C}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
