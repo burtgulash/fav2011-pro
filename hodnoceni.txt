@@ -1,0 +1,34 @@
+Hodnocení předmětu KIV/PRO 2011/2012 
+Tomáš Maršálek
+
+
+Osobně jsem od tohoto předmětu příliš nečekal, úvodem do algoritmů jsem se
+zabýval dříve a nyní se věnuji jiným tématům. Nevyhnu se srovnání s předmětem
+Programovací Techniky. Oba předměty mají matoucí názvy, možná by se
+mohly sloučit dohromady a jmenovat se "Algoritmy" nebo nějak podobně.
+
+Přednášek jsem se nezúčastnil vyjma úvodní a závěrečné. Ta první byla pro
+většinu třídy odstrašující, když byl představen seznam "větších" semestrálek s
+nicneříkajícími tématy ("jsme ve správném ročníku?"). Ze zvědavosti jsem se šel
+podívat na kvantové výpočty, protože jsem to celé nikdy nepochopil. Oceňuji, že
+výklad byl poutavý, ale bohužel jsem se nic nedozvěděl.
+
+Cvičení jsou zbytečná. V tichosti se pouze čeká, až někdo vymyslí řešení
+nějakého problému s kryptickým zadáním. Nikdo stejně nevymyslí nic
+smysluplného. Raději by se měl zadat nějaký známý problém, který ilustruje
+svojí algoritmickou techniku, nechat studenty strávit problém a věnovat čas
+jeho vysvětlení.
+
+Úkoly jsou celkem nezáživné, bral jsem je jako příležitost naučit se v LaTeXu.
+Nebylo třeba nad nimi moc přemýšlet, stačilo přeluštit zadání a vyhrál ten, kdo
+měl černější pás v Google-fu. Ale to není vyloženě na škodu.
+
+
+Ve světě počítačů se zatím snažím mít široký rozhled, znát základy všech
+odvětví. Specializovat se budu až později. Tento semestr jsem neměl vůbec čas
+na vlastní bádání. Smršť semestrálek ze všech možných předmětů mi sežrala
+všechen čas. 
+Semestr byl algoritmicky orientovaný, měl jsem v plánu vytvořit vlastní
+(použitelnou) multiprecision knihovnu nebo implementovat nějaké algoritmy z
+oblasti výpočetní teorie čísel nebo kryptografie. Nebyl čas. Ale příde mi to
+jako zajímavý skupinový/soutěživý projekt třeba právě na PRO.
