@@ -30,5 +30,5 @@ na vlastní bádání. Smršť semestrálek ze všech možných předmětů mi s
 všechen čas. 
 Semestr byl algoritmicky orientovaný, měl jsem v plánu vytvořit vlastní
 (použitelnou) multiprecision knihovnu nebo implementovat nějaké algoritmy z
-oblasti výpočetní teorie čísel nebo kryptografie. Nebyl čas. Ale příde mi to
+oblasti výpočetní teorie čísel nebo kryptografie. Nebyl čas. Ale přijde mi to
 jako zajímavý skupinový/soutěživý projekt třeba právě na PRO.
